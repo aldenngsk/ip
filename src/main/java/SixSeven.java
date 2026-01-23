@@ -43,9 +43,33 @@ public class SixSeven {
                 continue;
             }
 
-            tasks[taskCount] = new Task(input);
-            taskCount++;
-            System.out.println("added: " + input);
+            if (input.startsWith("todo ")) {
+                String description = input.substring(5);
+                tasks[taskCount++] = new Todo(description);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                continue;
+            }
+
+            if (input.startsWith("deadline ")) {
+                String[] parts = input.substring(9).split(" /by ");
+                tasks[taskCount++] = new Deadline(parts[0], parts[1]);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                continue;
+            }
+
+            if (input.startsWith("event ")) {
+                String[] parts = input.substring(6).split(" /from | /to ");
+                tasks[taskCount++] = new Event(parts[0], parts[1], parts[2]);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                continue;
+            }
+
         }
 
         scanner.close();
