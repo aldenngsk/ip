@@ -163,10 +163,7 @@ public class SixSeven {
         }
     }
 
-    /**
-     * Parses a single line from the data file into a Task.
-     * Format: T | 0/1 | desc   or   D | 0/1 | desc | by   or   E | 0/1 | desc | from | to
-     */
+
     private static Task parseTaskFromFile(String line) {
         String[] parts = line.split(" \\| ", 5);
         if (parts.length < 3) {
