@@ -1,101 +1,84 @@
-import java.io.BufferedReader;
 import java.io.File;
+<<<<<<< Updated upstream
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+=======
+>>>>>>> Stashed changes
 
 public class SixSeven {
-    private static final String DATA_DIR = "data";
     private static final String DATA_FILE = "data" + File.separator + "duke.txt";
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Task[] tasks = new Task[100];
-        int taskCount = loadTasks(tasks);
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
 
-        System.out.println("Hello! I'm SixSeven");
-        System.out.println("What can I do for you?");
+    public SixSeven(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        TaskList loaded;
+        try {
+            loaded = new TaskList(storage.load());
+        } catch (DukeException e) {
+            ui.showLoadingError();
+            loaded = new TaskList();
+        }
+        tasks = loaded;
+    }
 
-        while (true) {
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
             try {
-                String input = scanner.nextLine();
+                String fullCommand = ui.readCommand();
+                ui.showLine();
+                ParseResult pr = Parser.parse(fullCommand);
+                String cmd = pr.getCommand();
 
-                if (input.equals("bye")) {
-                    System.out.println("Bye. Hope to see you again soon!");
-                    break;
+                if ("bye".equals(cmd)) {
+                    ui.showMessage("Bye. Hope to see you again soon!");
+                    isExit = true;
+                    continue;
                 }
 
-                if (input.equals("list")) {
-                    System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + "." + tasks[i]);
+                if ("list".equals(cmd)) {
+                    ui.showMessage("Here are the tasks in your list:");
+                    for (int i = 0; i < tasks.getSize(); i++) {
+                        ui.showMessage((i + 1) + "." + tasks.getTask(i));
                     }
                     continue;
                 }
 
-                if (input.startsWith("mark ")) {
-                    int index = Integer.parseInt(input.substring(5)) - 1;
-                    if (index < 0 || index >= taskCount) {
-                        throw new DukeException("That task number does not exist.");
-                    }
-                    tasks[index].markDone();
-                    saveTasks(tasks, taskCount);
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(tasks[index]);
+                if ("mark".equals(cmd)) {
+                    Task t = tasks.getTask(pr.getIndex());
+                    t.markDone();
+                    saveTasks();
+                    ui.showMessage("Nice! I've marked this task as done:");
+                    ui.showMessage(t.toString());
                     continue;
                 }
 
-                if (input.startsWith("delete ")) {
-                    int index = Integer.parseInt(input.substring(7)) - 1;
-                
-                    if (index < 0 || index >= taskCount) {
-                        throw new DukeException("That task number does not exist.");
-                    }
-                
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println(tasks[index]);
-                
-                    for (int i = index; i < taskCount - 1; i++) {
-                        tasks[i] = tasks[i + 1];
-                    }
-                
-                    taskCount--;
-                    saveTasks(tasks, taskCount);
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
-                    continue;
-                }
-                
-
-                if (input.startsWith("unmark ")) {
-                    int index = Integer.parseInt(input.substring(7)) - 1;
-                    if (index < 0 || index >= taskCount) {
-                        throw new DukeException("That task number does not exist.");
-                    }
-                    tasks[index].markUndone();
-                    saveTasks(tasks, taskCount);
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(tasks[index]);
+                if ("unmark".equals(cmd)) {
+                    Task t = tasks.getTask(pr.getIndex());
+                    t.markUndone();
+                    saveTasks();
+                    ui.showMessage("OK, I've marked this task as not done yet:");
+                    ui.showMessage(t.toString());
                     continue;
                 }
 
-                if (input.equals("todo")) {
-                    throw new DukeException("The description of a todo cannot be empty.");
-                }
-
-                if (input.startsWith("todo ")) {
-                    String description = input.substring(5).trim();
-                    if (description.isEmpty()) {
-                        throw new DukeException("The description of a todo cannot be empty.");
-                    }
-                    tasks[taskCount++] = new Todo(description);
-                    saveTasks(tasks, taskCount);
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks[taskCount - 1]);
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                if ("delete".equals(cmd)) {
+                    Task t = tasks.removeTask(pr.getIndex());
+                    saveTasks();
+                    ui.showMessage("Noted. I've removed this task:");
+                    ui.showMessage(t.toString());
+                    ui.showMessage("Now you have " + tasks.getSize() + " tasks in the list.");
                     continue;
                 }
 
+<<<<<<< Updated upstream
                 if (input.startsWith("deadline ")) {
                     String[] parts = input.substring(9).split(" /by ");
                     if (parts.length < 2) {
@@ -106,34 +89,50 @@ public class SixSeven {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks[taskCount - 1]);
                     System.out.println("Now you have " + taskCount + " tasks in the list.");
+=======
+                if ("todo".equals(cmd)) {
+                    Task t = new Todo(pr.getDescription());
+                    tasks.addTask(t);
+                    saveTasks();
+                    ui.showMessage("Got it. I've added this task:");
+                    ui.showMessage(t.toString());
+                    ui.showMessage("Now you have " + tasks.getSize() + " tasks in the list.");
+>>>>>>> Stashed changes
                     continue;
                 }
 
-                if (input.startsWith("event ")) {
-                    String[] parts = input.substring(6).split(" /from | /to ");
-                    if (parts.length < 3) {
-                        throw new DukeException("Please specify an event using /from and /to.");
-                    }
-                    tasks[taskCount++] = new Event(parts[0], parts[1], parts[2]);
-                    saveTasks(tasks, taskCount);
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks[taskCount - 1]);
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                if ("deadline".equals(cmd)) {
+                    Task t = new Deadline(pr.getDescription(), pr.getByDate());
+                    tasks.addTask(t);
+                    saveTasks();
+                    ui.showMessage("Got it. I've added this task:");
+                    ui.showMessage(t.toString());
+                    ui.showMessage("Now you have " + tasks.getSize() + " tasks in the list.");
                     continue;
                 }
 
-                throw new DukeException("I don't understand that command.");
+                if ("event".equals(cmd)) {
+                    Task t = new Event(pr.getDescription(), pr.getFrom(), pr.getTo());
+                    tasks.addTask(t);
+                    saveTasks();
+                    ui.showMessage("Got it. I've added this task:");
+                    ui.showMessage(t.toString());
+                    ui.showMessage("Now you have " + tasks.getSize() + " tasks in the list.");
+                    continue;
+                }
 
             } catch (DukeException e) {
-                System.out.println("Oops! " + e.getMessage());
+                ui.showError(e.getMessage());
             } catch (Exception e) {
-                System.out.println("Oops! Something went wrong.");
+                ui.showError("Something went wrong.");
+            } finally {
+                ui.showLine();
             }
         }
-
-        scanner.close();
+        ui.close();
     }
 
+<<<<<<< Updated upstream
     /**
      * Loads tasks from the data file. Creates data directory if it does not exist.
      * Returns the number of tasks loaded. Returns 0 if file does not exist or on error.
@@ -211,5 +210,17 @@ public class SixSeven {
         } catch (IOException e) {
             System.out.println("Oops! Could not save tasks to file.");
         }
+=======
+    private void saveTasks() {
+        try {
+            storage.save(tasks);
+        } catch (DukeException e) {
+            ui.showSaveError();
+        }
+    }
+
+    public static void main(String[] args) {
+        new SixSeven(DATA_FILE).run();
+>>>>>>> Stashed changes
     }
 }
