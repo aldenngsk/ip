@@ -3,6 +3,9 @@ package sixseven;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A task with a due date.
+ */
 public class Deadline extends Task {
     private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
     private LocalDate by;

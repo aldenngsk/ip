@@ -3,6 +3,9 @@ package sixseven;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Holds the list of tasks and add/get/remove operations.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
@@ -14,10 +17,12 @@ public class TaskList {
         this.tasks = new ArrayList<>(tasks);
     }
 
+    /** Appends a task to the list. */
     public void addTask(Task task) {
         tasks.add(task);
     }
 
+    /** Returns the task at index; throws if index invalid. */
     public Task getTask(int index) throws DukeException {
         if (index < 0 || index >= tasks.size()) {
             throw new DukeException("That task number does not exist.");
@@ -25,6 +30,7 @@ public class TaskList {
         return tasks.get(index);
     }
 
+    /** Removes and returns the task at index; throws if index invalid. */
     public Task removeTask(int index) throws DukeException {
         if (index < 0 || index >= tasks.size()) {
             throw new DukeException("That task number does not exist.");
