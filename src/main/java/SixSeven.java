@@ -38,6 +38,27 @@ public class SixSeven {
                     continue;
                 }
 
+                if (input.startsWith("delete ")) {
+                    int index = Integer.parseInt(input.substring(7)) - 1;
+                
+                    if (index < 0 || index >= taskCount) {
+                        throw new DukeException("That task number does not exist.");
+                    }
+                
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(tasks[index]);
+                
+                    for (int i = index; i < taskCount - 1; i++) {
+                        tasks[i] = tasks[i + 1];
+                    }
+                
+                    taskCount--;
+                
+                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    continue;
+                }
+                
+
                 if (input.startsWith("unmark ")) {
                     int index = Integer.parseInt(input.substring(7)) - 1;
                     if (index < 0 || index >= taskCount) {
