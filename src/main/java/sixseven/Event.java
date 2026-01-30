@@ -1,3 +1,5 @@
+package sixseven;
+
 public class Event extends Task {
     private String from;
     private String to;
@@ -19,10 +21,6 @@ public class Event extends Task {
                 + " (/from " + from + " /to " + to + ")";
     }
 
-    /**
-     * Returns a string representation for saving to file.
-     * Format: E | 0/1 | description | from | to
-     */
     public String toFileString() {
         return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + " | " + to;
     }

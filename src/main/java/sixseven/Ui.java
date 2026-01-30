@@ -1,3 +1,5 @@
+package sixseven;
+
 import java.util.Scanner;
 
 public class Ui {
