@@ -1,7 +1,11 @@
-public class Deadline extends Task {
-    private String by;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String description, String by) {
+public class Deadline extends Task {
+    private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private LocalDate by;
+
+    public Deadline(String description, LocalDate by) {
         super(description);
         this.by = by;
     }
@@ -13,13 +17,9 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return getTypeIcon() + getStatusIcon() + " " + description + " (/by " + by + ")";
+        return getTypeIcon() + getStatusIcon() + " " + description + " (by: " + by.format(DISPLAY_FORMAT) + ")";
     }
 
-    /**
-     * Returns a string representation for saving to file.
-     * Format: D | 0/1 | description | by
-     */
     public String toFileString() {
         return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
     }

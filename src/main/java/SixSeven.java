@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class SixSeven {
@@ -101,7 +103,13 @@ public class SixSeven {
                     if (parts.length < 2) {
                         throw new DukeException("Please specify a deadline using /by.");
                     }
-                    tasks[taskCount++] = new Deadline(parts[0], parts[1]);
+                    LocalDate byDate;
+                    try {
+                        byDate = LocalDate.parse(parts[1].trim());
+                    } catch (DateTimeParseException e) {
+                        throw new DukeException("Please use date format yyyy-mm-dd (e.g. 2019-10-15).");
+                    }
+                    tasks[taskCount++] = new Deadline(parts[0].trim(), byDate);
                     saveTasks(tasks, taskCount);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks[taskCount - 1]);
@@ -134,10 +142,6 @@ public class SixSeven {
         scanner.close();
     }
 
-    /**
-     * Loads tasks from the data file. Creates data directory if it does not exist.
-     * Returns the number of tasks loaded. Returns 0 if file does not exist or on error.
-     */
     private static int loadTasks(Task[] tasks) {
         File dataDir = new File(DATA_DIR);
         File dataFile = new File(DATA_FILE);
@@ -163,10 +167,6 @@ public class SixSeven {
         }
     }
 
-    /**
-     * Parses a single line from the data file into a Task.
-     * Format: T | 0/1 | desc   or   D | 0/1 | desc | by   or   E | 0/1 | desc | from | to
-     */
     private static Task parseTaskFromFile(String line) {
         String[] parts = line.split(" \\| ", 5);
         if (parts.length < 3) {
@@ -178,7 +178,11 @@ public class SixSeven {
         if ("T".equals(type) && parts.length >= 3) {
             task = new Todo(parts[2].trim());
         } else if ("D".equals(type) && parts.length >= 4) {
-            task = new Deadline(parts[2].trim(), parts[3].trim());
+            try {
+                task = new Deadline(parts[2].trim(), LocalDate.parse(parts[3].trim()));
+            } catch (DateTimeParseException e) {
+                return null;
+            }
         } else if ("E".equals(type) && parts.length >= 5) {
             task = new Event(parts[2].trim(), parts[3].trim(), parts[4].trim());
         }
@@ -188,9 +192,6 @@ public class SixSeven {
         return task;
     }
 
-    /**
-     * Saves all tasks to the data file. Creates data directory if it does not exist.
-     */
     private static void saveTasks(Task[] tasks, int taskCount) {
         File dataDir = new File(DATA_DIR);
         if (!dataDir.exists()) {
