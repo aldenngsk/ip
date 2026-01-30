@@ -15,5 +15,13 @@ public class Deadline extends Task {
     public String toString() {
         return getTypeIcon() + getStatusIcon() + " " + description + " (/by " + by + ")";
     }
+
+    /**
+     * Returns a string representation for saving to file.
+     * Format: D | 0/1 | description | by
+     */
+    public String toFileString() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+    }
 }
 
