@@ -20,6 +20,13 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_findWithKeyword_returnsFindWithDescription() throws DukeException {
+        ParseResult r = Parser.parse("find book");
+        assertEquals("find", r.getCommand());
+        assertEquals("book", r.getDescription());
+    }
+
+    @Test
     public void parse_todoWithDescription_returnsTodoWithDescription() throws DukeException {
         ParseResult r = Parser.parse("todo read book");
         assertEquals("todo", r.getCommand());

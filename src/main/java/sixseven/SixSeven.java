@@ -46,6 +46,20 @@ public class SixSeven {
                     continue;
                 }
 
+                if ("find".equals(cmd)) {
+                    String keyword = pr.getDescription() == null ? "" : pr.getDescription();
+                    ui.showMessage("Here are the matching tasks in your list:");
+                    int num = 1;
+                    for (int i = 0; i < tasks.getSize(); i++) {
+                        Task t = tasks.getTask(i);
+                        if (!keyword.isEmpty() && t.getDescription().contains(keyword)) {
+                            ui.showMessage(num + "." + t);
+                            num++;
+                        }
+                    }
+                    continue;
+                }
+
                 if ("mark".equals(cmd)) {
                     Task t = tasks.getTask(pr.getIndex());
                     t.markDone();
