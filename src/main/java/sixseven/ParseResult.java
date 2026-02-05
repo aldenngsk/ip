@@ -2,9 +2,6 @@ package sixseven;
 
 import java.time.LocalDate;
 
-/**
- * Holds the parsed command type and arguments from user input.
- */
 public class ParseResult {
     private final String command;
     private final int index;

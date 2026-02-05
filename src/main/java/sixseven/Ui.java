@@ -2,9 +2,6 @@ package sixseven;
 
 import java.util.Scanner;
 
-/**
- * Handles reading user input and printing output.
- */
 public class Ui {
     private final Scanner scanner;
 
@@ -12,13 +9,11 @@ public class Ui {
         this.scanner = new Scanner(System.in);
     }
 
-    /** Prints the welcome message. */
     public void showWelcome() {
         System.out.println("Hello! I'm SixSeven");
         System.out.println("What can I do for you?");
     }
 
-    /** Reads one line of user input. */
     public String readCommand() {
         return scanner.nextLine();
     }
@@ -27,7 +22,6 @@ public class Ui {
         System.out.println("____________________________________________________________");
     }
 
-    /** Prints an error message. */
     public void showError(String message) {
         System.out.println("Oops! " + message);
     }

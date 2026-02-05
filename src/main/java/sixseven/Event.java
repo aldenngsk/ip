@@ -1,8 +1,5 @@
 package sixseven;
 
-/**
- * A task with a from/to time range.
- */
 public class Event extends Task {
     private String from;
     private String to;

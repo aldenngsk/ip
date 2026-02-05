@@ -2,9 +2,6 @@ package sixseven;
 
 import java.io.File;
 
-/**
- * Main app. Ties together Ui, Storage, Parser and TaskList.
- */
 public class SixSeven {
     private static final String DATA_FILE = "data" + File.separator + "duke.txt";
 
@@ -12,7 +9,6 @@ public class SixSeven {
     private final TaskList tasks;
     private final Ui ui;
 
-    /** Sets up Ui, Storage and TaskList (loads from file or empty). */
     public SixSeven(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -26,7 +22,6 @@ public class SixSeven {
         tasks = loaded;
     }
 
-    /** Runs the main command loop until bye. */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -141,7 +136,6 @@ public class SixSeven {
         }
     }
 
-    /** Entry point. */
     public static void main(String[] args) {
         new SixSeven(DATA_FILE).run();
     }

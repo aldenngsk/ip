@@ -3,12 +3,8 @@ package sixseven;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-/**
- * Turns raw user input into a ParseResult (command + args).
- */
 public class Parser {
 
-    /** Parses the full command string; throws DukeException if invalid. */
     public static ParseResult parse(String fullCommand) throws DukeException {
         String input = fullCommand.trim();
         if (input.isEmpty()) {
