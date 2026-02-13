@@ -4,6 +4,17 @@ import java.io.File;
 
 public class SixSeven {
     private static final String DATA_FILE = "data" + File.separator + "duke.txt";
+    private static final String HELP_MESSAGE = "Commands:\n"
+            + "  list - show all tasks\n"
+            + "  find <keyword> - search tasks by keyword\n"
+            + "  todo <description> - add a todo task\n"
+            + "  deadline <description> /by <yyyy-mm-dd> - add a deadline\n"
+            + "  event <description> /from <from> /to <to> - add an event\n"
+            + "  mark <number> - mark a task as done\n"
+            + "  unmark <number> - mark a task as not done\n"
+            + "  delete <number> - remove a task\n"
+            + "  help - show this help\n"
+            + "  bye - exit";
 
     private final Storage storage;
     private final TaskList tasks;
@@ -43,6 +54,11 @@ public class SixSeven {
                     for (int i = 0; i < tasks.getSize(); i++) {
                         ui.showMessage((i + 1) + "." + tasks.getTask(i));
                     }
+                    continue;
+                }
+
+                if ("help".equals(cmd)) {
+                    ui.showMessage(HELP_MESSAGE);
                     continue;
                 }
 

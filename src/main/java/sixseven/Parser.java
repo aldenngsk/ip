@@ -17,6 +17,9 @@ public class Parser {
         if (input.equals("list")) {
             return new ParseResult("list", -1, null, null, null, null);
         }
+        if (input.equals("help")) {
+            return new ParseResult("help", -1, null, null, null, null);
+        }
         if (input.startsWith("find ")) {
             String keyword = input.substring(5).trim();
             return new ParseResult("find", -1, keyword.isEmpty() ? null : keyword, null, null, null);
