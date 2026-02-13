@@ -4,6 +4,7 @@ import java.io.File;
 
 public class SixSeven {
     private static final String DATA_FILE = "data" + File.separator + "duke.txt";
+    private static final String MESSAGE_TASK_ADDED = "Got it. I've added this task:";
 
     private final Storage storage;
     private final TaskList tasks;
@@ -91,7 +92,7 @@ public class SixSeven {
                     Task t = new Todo(pr.getDescription());
                     tasks.addTask(t);
                     saveTasks();
-                    ui.showMessage("Got it. I've added this task:");
+                    ui.showMessage(MESSAGE_TASK_ADDED);
                     ui.showMessage(t.toString());
                     ui.showMessage("Now you have " + tasks.getSize() + " tasks in the list.");
                     continue;
@@ -101,7 +102,7 @@ public class SixSeven {
                     Task t = new Deadline(pr.getDescription(), pr.getByDate());
                     tasks.addTask(t);
                     saveTasks();
-                    ui.showMessage("Got it. I've added this task:");
+                    ui.showMessage(MESSAGE_TASK_ADDED);
                     ui.showMessage(t.toString());
                     ui.showMessage("Now you have " + tasks.getSize() + " tasks in the list.");
                     continue;
@@ -111,7 +112,7 @@ public class SixSeven {
                     Task t = new Event(pr.getDescription(), pr.getFrom(), pr.getTo());
                     tasks.addTask(t);
                     saveTasks();
-                    ui.showMessage("Got it. I've added this task:");
+                    ui.showMessage(MESSAGE_TASK_ADDED);
                     ui.showMessage(t.toString());
                     ui.showMessage("Now you have " + tasks.getSize() + " tasks in the list.");
                     continue;
