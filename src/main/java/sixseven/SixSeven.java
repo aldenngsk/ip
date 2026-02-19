@@ -3,6 +3,7 @@ package sixseven;
 import java.io.File;
 
 public class SixSeven {
+    // Level-8: Supports Deadline and Event task types with date/time
     private static final String DATA_FILE = "data" + File.separator + "duke.txt";
     private static final String HELP_MESSAGE = "Commands:\n"
             + "  list - show all tasks\n"
