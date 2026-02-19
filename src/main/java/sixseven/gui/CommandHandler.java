@@ -60,7 +60,9 @@ public class CommandHandler {
             if ("mark".equals(cmd)) {
                 Task t = tasks.getTask(pr.getIndex());
                 t.markDone();
-                saveTasks();
+                if (!saveTasks(out)) {
+                    return new GuiResponse(out, false);
+                }
                 out.add("Nice! I've marked this task as done:");
                 out.add(t.toString());
                 return new GuiResponse(out, false);
@@ -69,7 +71,9 @@ public class CommandHandler {
             if ("unmark".equals(cmd)) {
                 Task t = tasks.getTask(pr.getIndex());
                 t.markUndone();
-                saveTasks();
+                if (!saveTasks(out)) {
+                    return new GuiResponse(out, false);
+                }
                 out.add("OK, I've marked this task as not done yet:");
                 out.add(t.toString());
                 return new GuiResponse(out, false);
@@ -77,7 +81,9 @@ public class CommandHandler {
 
             if ("delete".equals(cmd)) {
                 Task t = tasks.removeTask(pr.getIndex());
-                saveTasks();
+                if (!saveTasks(out)) {
+                    return new GuiResponse(out, false);
+                }
                 out.add("Noted. I've removed this task:");
                 out.add(t.toString());
                 out.add("Now you have " + tasks.getSize() + " tasks in the list.");
@@ -87,7 +93,9 @@ public class CommandHandler {
             if ("todo".equals(cmd)) {
                 Task t = new Todo(pr.getDescription());
                 tasks.addTask(t);
-                saveTasks();
+                if (!saveTasks(out)) {
+                    return new GuiResponse(out, false);
+                }
                 out.add("Got it. I've added this task:");
                 out.add(t.toString());
                 out.add("Now you have " + tasks.getSize() + " tasks in the list.");
@@ -97,7 +105,9 @@ public class CommandHandler {
             if ("deadline".equals(cmd)) {
                 Task t = new Deadline(pr.getDescription(), pr.getByDate());
                 tasks.addTask(t);
-                saveTasks();
+                if (!saveTasks(out)) {
+                    return new GuiResponse(out, false);
+                }
                 out.add("Got it. I've added this task:");
                 out.add(t.toString());
                 out.add("Now you have " + tasks.getSize() + " tasks in the list.");
@@ -107,7 +117,9 @@ public class CommandHandler {
             if ("event".equals(cmd)) {
                 Task t = new Event(pr.getDescription(), pr.getFrom(), pr.getTo());
                 tasks.addTask(t);
-                saveTasks();
+                if (!saveTasks(out)) {
+                    return new GuiResponse(out, false);
+                }
                 out.add("Got it. I've added this task:");
                 out.add(t.toString());
                 out.add("Now you have " + tasks.getSize() + " tasks in the list.");
@@ -122,10 +134,13 @@ public class CommandHandler {
         return new GuiResponse(out, exit);
     }
 
-    private void saveTasks() {
+    private boolean saveTasks(List<String> out) {
         try {
             storage.save(tasks);
+            return true;
         } catch (DukeException e) {
+            out.add("Oops! Could not save tasks to file.");
+            return false;
         }
     }
 }

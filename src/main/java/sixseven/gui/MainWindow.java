@@ -32,13 +32,16 @@ public class MainWindow {
     private TaskList tasks;
     private Image userImage;
     private Image dukeImage;
+    private String loadingErrorMessage;
 
     public void setDataFile(String filePath) {
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
+            loadingErrorMessage = null;
         } catch (DukeException e) {
             tasks = new TaskList();
+            loadingErrorMessage = "Oops! Could not load tasks from file. Starting with empty list.";
         }
         commandHandler = new CommandHandler(tasks, storage);
         userImage = loadImage(USER_IMAGE_PATH);
@@ -58,6 +61,10 @@ public class MainWindow {
     }
 
     public void showWelcome() {
+        if (loadingErrorMessage != null) {
+            dialogContainer.getChildren().add(DialogBox.getDukeDialog(
+                    loadingErrorMessage, imageViewFor(dukeImage)));
+        }
         dialogContainer.getChildren().add(DialogBox.getDukeDialog(
                 "Hello! I'm SixSeven\nWhat can I do for you?", imageViewFor(dukeImage)));
     }
