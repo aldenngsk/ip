@@ -1,9 +1,11 @@
 package sixseven;
 
+/** Task with a start and end time. */
 public class Event extends Task {
     private String from;
     private String to;
 
+    /** Creates an event with description, start, and end. */
     public Event(String description, String from, String to) {
         super(description);
         this.from = from;

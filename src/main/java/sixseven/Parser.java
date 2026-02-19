@@ -3,8 +3,15 @@ package sixseven;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Turns raw user input into structured command data.
+ */
 public class Parser {
 
+    /**
+     * Parses a full command string and returns a ParseResult.
+     * Throws DukeException if the command is invalid.
+     */
     public static ParseResult parse(String fullCommand) throws DukeException {
         String input = fullCommand.trim();
         if (input.isEmpty()) {

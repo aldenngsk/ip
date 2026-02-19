@@ -10,6 +10,9 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles reading tasks from and writing tasks to the data file.
+ */
 public class Storage {
     private final String filePath;
     private final String dataDir;
@@ -20,6 +23,9 @@ public class Storage {
         this.dataDir = lastSep >= 0 ? filePath.substring(0, lastSep) : ".";
     }
 
+    /**
+     * Loads tasks from the file. Returns an empty list if the file is missing or empty.
+     */
     public List<Task> load() throws DukeException {
         File dataFile = new File(filePath);
         if (!dataFile.exists()) {
@@ -44,6 +50,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes the current task list to the file. Creates the folder if it does not exist.
+     */
     public void save(TaskList taskList) throws DukeException {
         File dir = new File(dataDir);
         if (!dir.exists()) {

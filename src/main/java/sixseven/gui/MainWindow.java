@@ -1,5 +1,7 @@
 package sixseven.gui;
 
+import java.io.InputStream;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -8,12 +10,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import sixseven.DukeException;
 import sixseven.Storage;
 import sixseven.TaskList;
 
-import java.io.InputStream;
-
+/**
+ * Main window controller. Manages the chat area, input field, and user interaction.
+ */
 public class MainWindow {
     private static final String USER_IMAGE_PATH = "/images/user.png";
     private static final String DUKE_IMAGE_PATH = "/images/duke.png";
@@ -34,6 +38,9 @@ public class MainWindow {
     private Image dukeImage;
     private String loadingErrorMessage;
 
+    /**
+     * Initializes storage and loads tasks from the given file path.
+     */
     public void setDataFile(String filePath) {
         storage = new Storage(filePath);
         try {
@@ -60,6 +67,7 @@ public class MainWindow {
         return img != null ? new ImageView(img) : null;
     }
 
+    /** Shows the welcome message and any loading error if tasks could not be loaded. */
     public void showWelcome() {
         if (loadingErrorMessage != null) {
             dialogContainer.getChildren().add(DialogBox.getDukeDialog(

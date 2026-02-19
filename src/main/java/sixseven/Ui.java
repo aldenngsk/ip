@@ -2,6 +2,9 @@ package sixseven;
 
 import java.util.Scanner;
 
+/**
+ * Handles all text output and input for the text UI.
+ */
 public class Ui {
     private final Scanner scanner;
 
@@ -30,10 +33,12 @@ public class Ui {
         System.out.println(message);
     }
 
+    /** Prints a message when loading tasks from file fails. */
     public void showLoadingError() {
         System.out.println("Oops! Could not load tasks from file. Starting with empty list.");
     }
 
+    /** Prints a message when saving tasks to file fails. */
     public void showSaveError() {
         System.out.println("Oops! Could not save tasks to file.");
     }

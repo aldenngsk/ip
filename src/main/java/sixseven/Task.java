@@ -1,5 +1,8 @@
 package sixseven;
 
+/**
+ * Base for all task types. Tracks description and completion status.
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -17,6 +20,7 @@ public abstract class Task {
         isDone = false;
     }
 
+    /** Returns the task description. */
     public String getDescription() {
         return description;
     }

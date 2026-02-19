@@ -31,7 +31,7 @@ list
 Here are the tasks in your list:
 1.[T][ ] read book
 2.[D][ ] return book (by: Dec 01 2024)
-3.[E][ ] project meeting (from: Mon 2pm /to 4pm)
+3.[E][ ] project meeting (/from Mon 2pm /to 4pm)
 ```
 
 ### Searching tasks: `find`
@@ -94,7 +94,7 @@ Adds a task with start and end times.
 
 ```
 Got it. I've added this task:
-[E][ ] team meeting (from: Mon 2pm /to 4pm)
+[E][ ] team meeting (/from Mon 2pm /to 4pm)
 Now you have 6 tasks in the list.
 ```
 
@@ -133,7 +133,7 @@ Removes the task at the given number from the list.
 
 ```
 Noted. I've removed this task:
-[E][ ] team meeting (from: Mon 2pm /to 4pm)
+[E][ ] team meeting (/from Mon 2pm /to 4pm)
 Now you have 5 tasks in the list.
 ```
 

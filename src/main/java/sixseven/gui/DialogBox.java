@@ -2,12 +2,15 @@ package sixseven.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 
+/** A single chat bubble in the GUI. */
 public class DialogBox extends HBox {
     private static final double WRAP_WIDTH = 320;
     private static final int PADDING = 12;
@@ -38,8 +41,8 @@ public class DialogBox extends HBox {
         }
     }
 
-    private static javafx.scene.Node placeholderNode() {
-        javafx.scene.layout.StackPane p = new javafx.scene.layout.StackPane();
+    private static Node placeholderNode() {
+        StackPane p = new StackPane();
         p.setMinSize(40, 40);
         p.setMaxSize(40, 40);
         p.getStyleClass().add("avatar-placeholder");
@@ -56,6 +59,7 @@ public class DialogBox extends HBox {
         return getUserDialog(text, null);
     }
 
+    /** Creates a bot message bubble, optionally with an avatar image. */
     public static DialogBox getDukeDialog(String text, ImageView dukeImage) {
         Label l = new Label(text);
         l.getStyleClass().add("dialog-text");

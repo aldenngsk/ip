@@ -1,5 +1,6 @@
 package sixseven;
 
+/** Task with no date or time. */
 public class Todo extends Task {
     public Todo(String description) {
         super(description);

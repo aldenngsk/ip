@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/** JavaFX application entry point. Sets up the window and loads the FXML layout. */
 public class MainApp extends Application {
     private static final String DATA_FILE = "data" + java.io.File.separator + "duke.txt";
 

@@ -3,6 +3,7 @@ package sixseven.gui;
 import java.util.Collections;
 import java.util.List;
 
+/** Holds the list of messages to display and whether the app should exit. */
 public class GuiResponse {
     private final List<String> messages;
     private final boolean shouldExit;

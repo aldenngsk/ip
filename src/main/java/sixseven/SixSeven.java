@@ -2,6 +2,9 @@ package sixseven;
 
 import java.io.File;
 
+/**
+ * Main chatbot class. Runs the command loop for the text-based interface.
+ */
 public class SixSeven {
     private static final String DATA_FILE = "data" + File.separator + "duke.txt";
     private static final String HELP_MESSAGE = "Commands:\n"
@@ -21,6 +24,10 @@ public class SixSeven {
     private final TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Creates SixSeven and loads tasks from the given file.
+     * If loading fails, starts with an empty list and shows an error.
+     */
     public SixSeven(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);

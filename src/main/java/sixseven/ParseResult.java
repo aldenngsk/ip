@@ -2,6 +2,7 @@ package sixseven;
 
 import java.time.LocalDate;
 
+/** Immutable holder for parsed command data (command type, index, description, dates, etc.). */
 public class ParseResult {
     private final String command;
     private final int index;
