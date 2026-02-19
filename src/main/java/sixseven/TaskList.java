@@ -19,17 +19,22 @@ public class TaskList {
     }
 
     public Task getTask(int index) throws DukeException {
-        if (index < 0 || index >= tasks.size()) {
+        if (!isValidIndex(index)) {
             throw new DukeException("That task number does not exist.");
         }
         return tasks.get(index);
     }
 
     public Task removeTask(int index) throws DukeException {
-        if (index < 0 || index >= tasks.size()) {
+        if (!isValidIndex(index)) {
             throw new DukeException("That task number does not exist.");
         }
         return tasks.remove(index);
+    }
+
+    // Cursor helped extract this to remove duplicate validation (A-AiAssisted)
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < tasks.size();
     }
 
     public int getSize() {
