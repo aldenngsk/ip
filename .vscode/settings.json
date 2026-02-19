@@ -4,5 +4,7 @@
     "editor.detectIndentation": false,
     "editor.trimAutoWhitespace": true,
     "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true
+    "files.trimFinalNewlines": true,
+    "java.import.gradle.enabled": true,
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
