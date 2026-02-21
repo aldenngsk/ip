@@ -41,7 +41,7 @@ test {
 }
 
 application {
-    mainClass.set("sixseven.MainApp")
+    mainClass.set("sixseven.Launcher")
 }
 
 shadowJar {
